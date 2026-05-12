@@ -1,0 +1,46 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* { box-sizing: border-box; }
+
+body {
+  background: #f5f4f0;
+  color: #1a1a1a;
+  font-family: var(--font-inter), system-ui, sans-serif;
+}
+
+/* Note colors */
+.nc-yellow  { background: #fffde7; }
+.nc-green   { background: #e8f5e9; }
+.nc-blue    { background: #e3f2fd; }
+.nc-pink    { background: #fce4ec; }
+.nc-orange  { background: #fff3e0; }
+.nc-purple  { background: #f3e5f5; }
+.nc-white   { background: #ffffff; border: 0.5px solid #e0e0e0; }
+
+/* BMC grid layout */
+.bmc-grid {
+  display: grid;
+  grid-template-columns: repeat(10, 1fr);
+  grid-template-rows: repeat(3, auto) auto auto;
+  gap: 6px;
+  min-width: 900px;
+}
+
+.bmc-kp   { grid-column: 1 / 3;  grid-row: 1 / 3; }
+.bmc-ka   { grid-column: 3 / 5;  grid-row: 1; }
+.bmc-kr   { grid-column: 3 / 5;  grid-row: 2; }
+.bmc-vp   { grid-column: 5 / 7;  grid-row: 1 / 3; }
+.bmc-cr   { grid-column: 7 / 9;  grid-row: 1; }
+.bmc-ch   { grid-column: 7 / 9;  grid-row: 2; }
+.bmc-cs   { grid-column: 9 / 11; grid-row: 1 / 3; }
+.bmc-cost { grid-column: 1 / 6;  grid-row: 3; }
+.bmc-rev  { grid-column: 6 / 11; grid-row: 3; }
+.bmc-bs   { grid-column: 1 / 11; grid-row: 4; background: #fffdf0; border-color: #e8e0c0 !important; }
+
+/* Drag over state */
+.drag-over { background: #eef6ff !important; border-color: #90bfef !important; }
+
+/* Note drag */
+.note-dragging { opacity: 0.4; }
