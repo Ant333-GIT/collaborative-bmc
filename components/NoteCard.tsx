@@ -25,28 +25,20 @@ export default function NoteCard({ note, currentAuthor, isViewer, onUpdate, onDe
 
   const canEdit = isOwner || unlocked
 
-  // Set initial content via DOM — never let React control this div's children
+  // Mount: set initial content
   useEffect(() => {
-    if (contentRef.current && contentRef.current.textContent !== note.content) {
-      // Save cursor position
-      const sel = window.getSelection()
-      const hadFocus = document.activeElement === contentRef.current
-      
+    if (contentRef.current) {
       contentRef.current.textContent = note.content
-
-      // Restore cursor to end if we had focus
-      if (hadFocus && sel) {
-        const range = document.createRange()
-        const node = contentRef.current.firstChild || contentRef.current
-        const offset = node.nodeType === Node.TEXT_NODE 
-          ? (node as Text).length 
-          : 0
-        range.setStart(node, offset)
-        range.collapse(true)
-        sel.removeAllRanges()
-        sel.addRange(range)
-      }
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
+  // Realtime updates from other users
+  useEffect(() => {
+    if (!contentRef.current) return
+    if (document.activeElement === contentRef.current) return
+    if (contentRef.current.textContent === note.content) return
+    contentRef.current.textContent = note.content
   }, [note.content])
 
   function handleInput() {
