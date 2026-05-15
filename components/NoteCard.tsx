@@ -21,10 +21,19 @@ export default function NoteCard({ note, currentAuthor, isViewer, onUpdate, onDe
   const [dragging, setDragging] = useState(false)
   const contentRef = useRef<HTMLDivElement>(null)
   const saveTimer = useRef<ReturnType<typeof setTimeout>>()
+  const isComposing = useRef(false)
 
   const canEdit = isOwner || unlocked
 
+  // Set initial content only once on mount — never update via React after that
+  const didMount = useRef(false)
+  if (!didMount.current && contentRef.current) {
+    contentRef.current.textContent = note.content
+    didMount.current = true
+  }
+
   function handleInput() {
+    if (isComposing.current) return
     clearTimeout(saveTimer.current)
     saveTimer.current = setTimeout(() => {
       onUpdate({ content: contentRef.current?.textContent || '' })
@@ -61,12 +70,14 @@ export default function NoteCard({ note, currentAuthor, isViewer, onUpdate, onDe
           ref={contentRef}
           contentEditable={canEdit}
           suppressContentEditableWarning
+          onCompositionStart={() => { isComposing.current = true }}
+          onCompositionEnd={() => { isComposing.current = false; handleInput() }}
           onInput={handleInput}
           onKeyDown={e => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); contentRef.current?.blur() } }}
           className="outline-none min-h-[1.2em] whitespace-pre-wrap break-words"
           style={{ cursor: canEdit ? 'text' : 'inherit' }}
         >
-          {note.content}
+          {/* Content rendered via ref, not React */}
         </div>
 
         {/* Author badge */}
