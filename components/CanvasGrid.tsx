@@ -35,7 +35,7 @@ export default function CanvasGrid({ notes, currentAuthor, isViewer, onAddNote, 
       {SECTIONS.map(sec => (
         <div
           key={sec.id}
-          className={`bmc-${sec.id} bg-white border border-gray-200 rounded-xl p-2.5 flex flex-col gap-1.5 min-h-[160px] transition-colors ${dragOver === sec.id ? 'drag-over' : ''}`}
+          className={`bmc-${sec.id} bg-white border border-gray-200 rounded-xl p-2.5 flex flex-col gap-1.5 overflow-hidden transition-colors ${dragOver === sec.id ? 'drag-over' : ''}`}
           onDragOver={e => { e.preventDefault(); setDragOver(sec.id) }}
           onDragLeave={() => setDragOver(null)}
           onDrop={e => handleDrop(e, sec.id)}
@@ -57,8 +57,8 @@ export default function CanvasGrid({ notes, currentAuthor, isViewer, onAddNote, 
             )}
           </div>
 
-          {/* Notes */}
-          <div className="flex flex-col gap-1.5 flex-1">
+          {/* Notes — scrollable */}
+          <div className="flex flex-col gap-1.5 flex-1 overflow-y-auto pr-0.5">
             {notesFor(sec.id).map(note => (
               <NoteCard
                 key={note.id}
