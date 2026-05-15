@@ -23,10 +23,10 @@ body {
 .bmc-grid {
   display: grid;
   grid-template-columns: repeat(10, 1fr);
-  grid-template-rows: repeat(2, minmax(200px, 1fr)) minmax(160px, auto) minmax(120px, auto);
+  grid-template-rows: repeat(2, 1fr) minmax(160px, auto) minmax(120px, auto);
   gap: 6px;
   min-width: 900px;
-  height: calc(100vh - 56px);
+  min-height: calc(100vh - 56px);
 }
 
 .bmc-kp   { grid-column: 1 / 3;  grid-row: 1 / 3; }
