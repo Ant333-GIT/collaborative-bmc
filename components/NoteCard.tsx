@@ -73,7 +73,7 @@ export default function NoteCard({ note, currentAuthor, isViewer, onUpdate, onDe
           onCompositionStart={() => { isComposing.current = true }}
           onCompositionEnd={() => { isComposing.current = false; handleInput() }}
           onInput={handleInput}
-          onKeyDown={e => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); contentRef.current?.blur() } }}
+          onKeyDown={e => { if (e.key === 'Enter' && (e.ctrlKey || e.metaKey)) { e.preventDefault(); contentRef.current?.blur() } }}
           className="outline-none min-h-[1.2em] whitespace-pre-wrap break-words"
           style={{ cursor: canEdit ? 'text' : 'inherit' }}
         >
